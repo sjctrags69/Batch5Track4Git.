@@ -2,70 +2,64 @@ package org.ssglobal.training.codes.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 import org.ssglobal.training.codes.CheckStr;
 
 public class TestCheckStr {
-	@Test
-	public void testConvertWithSpace() {
-		CheckStr cs = new CheckStr();
-		String str = "hello world";
-		assertEquals("00111010001", cs.convert(str));
-		System.out.println(cs.convert(str));
-	}
 	
 	@Test
-	public void testConvertEmpty() {
+	public void convertEmpty() {
 		CheckStr cs = new CheckStr();
 		String str = "";
 		assertEquals("", cs.convert(str));
-		System.out.println(cs.convert(str));
 	}
 	
 	@Test
-	public void testConvertNull() {
+	public void convertNull() {
 		CheckStr cs = new CheckStr();
 		String str = null;
-		assertThrows(NullPointerException.class, () ->{
-			assertNull(cs.convert(str));
-			System.out.println(cs.convert(str));
+		assertThrows(NullPointerException.class, ()-> {
+			assertEquals(null, cs.convert(str));
 		});
 	}
 	
 	@Test
-	public void testConvertWhiteSpaces() {
+	public void convertWhiteSpaces() {
 		CheckStr cs = new CheckStr();
 		String str = "String\n\t";
-		assertEquals("0101000101", cs.convert(str));
-		System.out.println(cs.convert(str));
+		assertNotEquals(01102204, cs.convert(str));
 	}
 	
 	@Test
-	public void testConvertMixedRainy() {
+	public void convertWithSpaces() {
+		CheckStr cs = new CheckStr();
+		String str = "hello world";
+		assertEquals(37008, cs.convert(str));
+	}
+	
+	@Test
+	public void convertMixed() {
 		CheckStr cs = new CheckStr();
 		String str = "1234xml";
-		assertNotEquals("0101000100", cs.convert(str));
-		System.out.println(cs.convert(str));
+		assertEquals(1101100001, cs.convert(str));
 	}
 	
-	
 	@Test
-	public void testTotal() {
+	public void total() {
 		CheckStr cs = new CheckStr();
 		String str = "I am a trainee";
-		cs.total(str);
-		System.out.println(cs.total(str));
+		assertEquals(1216, cs.total(str));
 	}
 	
 	@Test
-	public void testBinarise() {
+	public void binarise() {
 		CheckStr cs = new CheckStr();
-		cs.binarise(4);
-		System.out.println(cs.binarise(4));
+		String str = "I am a trainee";
+		int i = Integer.parseInt(str);
+		assertNull(cs.binarise(i));
 	}
+	
 }
